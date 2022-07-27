@@ -7,35 +7,32 @@ using System.Linq;
 
 namespace OnDemandCarWashSystemAPI.Repository
 {
-    public class PackageRepository:IPackage
+    public class CarRepository:ICar
     {
-        private CarWashContext _packageDb;
-        public PackageRepository(CarWashContext packageDbContext)
+        private CarWashContext _carDb;
+        public CarRepository(CarWashContext carDbContext)
         {
-            _packageDb = packageDbContext;
+            _carDb = carDbContext;
         }
-        #region GetAllPackage
-        public List<Package> GetAllPackage()
+        public List<Car> GetAllCar()
         {
-            List<Package> packages = null;
+            List<Car> cars = null;
             try
             {
-                packages = _packageDb.Packages.ToList();
+                cars = _carDb.Cars.ToList();
             }
             catch (Exception ex) { }
-            return packages;
+            return cars;
         }
-        #endregion
-        #region GetPackageById
-        public Package GetPackage(int id)
+        public Car GetCar(int id)
         {
-            Package package;
+            Car car;
             try
             {
-                package = _packageDb.Packages.Find(id);
-                if (package != null)
+                car = _carDb.Cars.Find(id);
+                if (car != null)
                 {
-                    return package;
+                    return car;
                 }
             }
             catch (Exception ex)
@@ -44,19 +41,17 @@ namespace OnDemandCarWashSystemAPI.Repository
             }
             finally
             {
-                package = null;
+                car = null;
             }
-            return package;
+            return car;
         }
-        #endregion
-        #region AddPackage
-        public string AddPackage(Package package)
+        public string AddCar(Car car)
         {
             string result = string.Empty;
             try
             {
-                _packageDb.Packages.Add(package);
-                _packageDb.SaveChanges();
+                _carDb.Cars.Add(car);
+                _carDb.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -64,15 +59,13 @@ namespace OnDemandCarWashSystemAPI.Repository
             }
             return result;
         }
-        #endregion
-        #region UpdatePackage
-        public string UpdatePackage(Package package)
+        public string UpdateCar(Car car)
         {
             string result = string.Empty;
             try
             {
-                _packageDb.Entry(package).State = EntityState.Modified;
-                _packageDb.SaveChanges();
+                _carDb.Entry(car).State = EntityState.Modified;
+                _carDb.SaveChanges();
                 result = "200";
             }
             catch
@@ -81,20 +74,18 @@ namespace OnDemandCarWashSystemAPI.Repository
             }
             return result;
         }
-        #endregion
-        #region DeletePackage
-        public string DeletePackage(int id)
+        public string DeleteCar(int id)
         {
             string result = string.Empty;
-            Package package;
+            Car car;
             try
             {
-                package = _packageDb.Packages.Find(id);
-                if (package != null)
+                car = _carDb.Cars.Find(id);
+                if (car != null)
                 {
                     //package.Status = "In Active";
-                    _packageDb.Packages.Remove(package);
-                    _packageDb.SaveChanges();
+                    _carDb.Cars.Remove(car);
+                    _carDb.SaveChanges();
                     result = "200";
                 }
             }
@@ -104,10 +95,9 @@ namespace OnDemandCarWashSystemAPI.Repository
             }
             finally
             {
-                package = null;
+                car = null;
             }
             return result;
         }
-        #endregion
     }
 }

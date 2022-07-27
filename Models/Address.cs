@@ -6,28 +6,18 @@ namespace OnDemandCarWashSystemAPI.Models
     public class Address
     {
         [Key]
+        [DataType("int")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        public string CustAddress { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Pincode { get; set; }
+        public string Country { get; set; }
+
         public int CustId { get; set; }
         [ForeignKey("CustId")]
-        public Customer Customer { get; set; }
-
-        [Required(ErrorMessage = "Please enter the address"), MaxLength(50)]
-        [Column(TypeName = "VARCHAR(50)")]
-        public string CustAddress { get; set; }
-
-
-        [Required(ErrorMessage = "Please enter city"), MaxLength(50)]
-        [Column(TypeName = "VARCHAR(50)")]
-        public string City { get; set; }
-
-
-        [Required(ErrorMessage = "Please enter state"), MaxLength(50)]
-        [Column(TypeName = "VARCHAR(50)")]
-        public string State { get; set; }
-
-        [Required(ErrorMessage = "Please enter pincode"), MaxLength(6)]
-        public int Pincode { get; set; }
+        public UserDetails UserDetails { get; set; }
     }
 }

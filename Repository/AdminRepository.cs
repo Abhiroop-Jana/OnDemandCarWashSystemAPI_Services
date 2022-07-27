@@ -7,32 +7,32 @@ using System.Linq;
 
 namespace OnDemandCarWashSystemAPI.Repository
 {
-    public class CustomerRepository : ICustomer
+    public class AdminRepository:IAdmin
     {
-        private CarWashContext _customerDb;
-        public CustomerRepository(CarWashContext customerDbContext)
+        private CarWashContext _adminDb;
+        public AdminRepository(CarWashContext adminDbContext)
         {
-            _customerDb = customerDbContext;
+            _adminDb = adminDbContext;
         }
-        public List<Customer> GetAllCustomer()
+        public List<Admin> GetAllAdmin()
         {
-            List<Customer> customers = null;
+            List<Admin> admins = null;
             try
             {
-                customers = _customerDb.Customers.ToList();
+                admins = _adminDb.Admins.ToList();
             }
             catch (Exception ex) { }
-            return customers;
+            return admins;
         }
-        public Customer GetCustomer(int id)
+        public Admin GetAdmin(int id)
         {
-            Customer customer;
+            Admin admin;
             try
             {
-                customer = _customerDb.Customers.Find(id);
-                if (customer != null)
+                admin = _adminDb.Admins.Find(id);
+                if (admin != null)
                 {
-                    return customer;
+                    return admin;
                 }
             }
             catch (Exception ex)
@@ -41,17 +41,17 @@ namespace OnDemandCarWashSystemAPI.Repository
             }
             finally
             {
-                customer = null;
+                admin = null;
             }
-            return customer;
+            return admin;
         }
-        public string AddCustomer(Customer customer)
+        public string AddAdmin(Admin admin)
         {
             string result = string.Empty;
             try
             {
-                _customerDb.Customers.Add(customer);
-                _customerDb.SaveChanges();
+                _adminDb.Admins.Add(admin);
+                _adminDb.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -59,13 +59,13 @@ namespace OnDemandCarWashSystemAPI.Repository
             }
             return result;
         }
-        public string UpdateCustomer(Customer customer)
+        public string UpdateAdmin(Admin admin)
         {
             string result = string.Empty;
             try
             {
-                _customerDb.Entry(customer).State = EntityState.Modified;
-                _customerDb.SaveChanges();
+                _adminDb.Entry(admin).State = EntityState.Modified;
+                _adminDb.SaveChanges();
                 result = "200";
             }
             catch
@@ -74,17 +74,18 @@ namespace OnDemandCarWashSystemAPI.Repository
             }
             return result;
         }
-        public string DeleteCustomer(int id)
+        public string DeleteAdmin(int id)
         {
             string result = string.Empty;
-            Customer customer;
+            Admin admin;
             try
             {
-                customer = _customerDb.Customers.Find(id);
-                if (customer != null)
-                { 
-                    _customerDb.Customers.Remove(customer);
-                    _customerDb.SaveChanges();
+                admin = _adminDb.Admins.Find(id);
+                if (admin != null)
+                {
+                    //package.Status = "In Active";
+                    _adminDb.Admins.Remove(admin);
+                    _adminDb.SaveChanges();
                     result = "200";
                 }
             }
@@ -94,7 +95,7 @@ namespace OnDemandCarWashSystemAPI.Repository
             }
             finally
             {
-                customer = null;
+                admin = null;
             }
             return result;
         }

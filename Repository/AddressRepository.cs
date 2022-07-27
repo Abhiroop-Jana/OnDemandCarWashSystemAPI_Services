@@ -16,20 +16,20 @@ namespace OnDemandCarWashSystemAPI.Repository
         }
         public List<Address> GetAllAddress()
         {
-            List<Address> addresses = null;
+            List<Address> address= null;
             try
             {
-                addresses = _addressDb.Addresses.ToList();
+                address = _addressDb.Address.ToList();
             }
             catch (Exception ex) { }
-            return addresses;
+            return address;
         }
         public Address GetAddress(int id)
         {
             Address address;
             try
             {
-                address = _addressDb.Addresses.Find(id);
+                address = _addressDb.Address.Find(id);
                 if (address != null)
                 {
                     return address;
@@ -50,7 +50,7 @@ namespace OnDemandCarWashSystemAPI.Repository
             string result = string.Empty;
             try
             {
-                _addressDb.Addresses.Add(address);
+                _addressDb.Address.Add(address);
                 _addressDb.SaveChanges();
             }
             catch (Exception ex)
@@ -80,10 +80,11 @@ namespace OnDemandCarWashSystemAPI.Repository
             Address address;
             try
             {
-                address = _addressDb.Addresses.Find(id);
+                address = _addressDb.Address.Find(id);
                 if (address != null)
                 {
-                    _addressDb.Addresses.Remove(address);
+                    //package.Status = "In Active";
+                    _addressDb.Address.Remove(address);
                     _addressDb.SaveChanges();
                     result = "200";
                 }

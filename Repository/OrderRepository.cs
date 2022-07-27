@@ -7,35 +7,32 @@ using System.Linq;
 
 namespace OnDemandCarWashSystemAPI.Repository
 {
-    public class PackageRepository:IPackage
+    public class OrderRepository:IOrder
     {
-        private CarWashContext _packageDb;
-        public PackageRepository(CarWashContext packageDbContext)
+        private CarWashContext _orderDb;
+        public OrderRepository(CarWashContext orderDbContext)
         {
-            _packageDb = packageDbContext;
+            _orderDb = orderDbContext;
         }
-        #region GetAllPackage
-        public List<Package> GetAllPackage()
+        public List<Order> GetAllOrder()
         {
-            List<Package> packages = null;
+            List<Order> orders = null;
             try
             {
-                packages = _packageDb.Packages.ToList();
+                orders = _orderDb.Orders.ToList();
             }
             catch (Exception ex) { }
-            return packages;
+            return orders;
         }
-        #endregion
-        #region GetPackageById
-        public Package GetPackage(int id)
+        public Order GetOrder(int id)
         {
-            Package package;
+            Order order;
             try
             {
-                package = _packageDb.Packages.Find(id);
-                if (package != null)
+                order = _orderDb.Orders.Find(id);
+                if (order != null)
                 {
-                    return package;
+                    return order;
                 }
             }
             catch (Exception ex)
@@ -44,19 +41,17 @@ namespace OnDemandCarWashSystemAPI.Repository
             }
             finally
             {
-                package = null;
+                order = null;
             }
-            return package;
+            return order;
         }
-        #endregion
-        #region AddPackage
-        public string AddPackage(Package package)
+        public string AddOrder(Order order)
         {
             string result = string.Empty;
             try
             {
-                _packageDb.Packages.Add(package);
-                _packageDb.SaveChanges();
+                _orderDb.Orders.Add(order);
+                _orderDb.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -64,15 +59,13 @@ namespace OnDemandCarWashSystemAPI.Repository
             }
             return result;
         }
-        #endregion
-        #region UpdatePackage
-        public string UpdatePackage(Package package)
+        public string UpdateOrder(Order order)
         {
             string result = string.Empty;
             try
             {
-                _packageDb.Entry(package).State = EntityState.Modified;
-                _packageDb.SaveChanges();
+                _orderDb.Entry(order).State = EntityState.Modified;
+                _orderDb.SaveChanges();
                 result = "200";
             }
             catch
@@ -81,20 +74,18 @@ namespace OnDemandCarWashSystemAPI.Repository
             }
             return result;
         }
-        #endregion
-        #region DeletePackage
-        public string DeletePackage(int id)
+        public string DeleteOrder(int id)
         {
             string result = string.Empty;
-            Package package;
+            Order order;
             try
             {
-                package = _packageDb.Packages.Find(id);
-                if (package != null)
+                order = _orderDb.Orders.Find(id);
+                if (order != null)
                 {
                     //package.Status = "In Active";
-                    _packageDb.Packages.Remove(package);
-                    _packageDb.SaveChanges();
+                    _orderDb.Orders.Remove(order);
+                    _orderDb.SaveChanges();
                     result = "200";
                 }
             }
@@ -104,10 +95,9 @@ namespace OnDemandCarWashSystemAPI.Repository
             }
             finally
             {
-                package = null;
+                order = null;
             }
             return result;
         }
-        #endregion
     }
 }
